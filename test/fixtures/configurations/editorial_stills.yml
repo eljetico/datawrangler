@@ -1,0 +1,306 @@
+editorial_stills_default: &editorial_default
+  sheets:
+    assets:
+      information:
+        display_name: 'Standard Editorial Asset Template (ESP)'
+        content_type: 'editorial'
+        display: true
+      key_fields:
+        -
+          'file location'
+        -
+          'file name'
+      fields:
+        'file location':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        'target folder':
+          required_header: false
+          aliases:
+            - 'asset path'
+            - 'path'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        'file name': &editorial_file_name
+          aliases:
+            - 'filename'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 3
+                max: 255
+        'alternate id':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 64
+        'provider name': &editorial_provider_name
+          aliases:
+            - 'byline'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        'provider title': &editorial_provider_title
+          aliases:
+            - 'byline title'
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['Contributor', 'Partner']
+                default_value: Contributor
+        'credit line': &editorial_credit_line
+          aliases:
+            - credit
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        'rank': &editorial_rank
+          db_field: rank
+          required_header: false
+          default_value: 3
+          validators:
+            -
+              validator: NumberRange
+              options:
+                min: 1
+                max: 3
+        'category': &editorial_category
+          aliases:
+            - 'iptc category'
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  A: ['US Domestic News']
+                  E: ['Entertainment']
+                  S: ['Sports']
+                  I: ['Non-US Domestic News']
+        'esp batch tag':
+          required_header: false
+          aliases:
+            - 'ipw batch tag'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 64
+        'supplemental categories': &editorial_subjects
+          aliases:
+            - 'iptc subjects'
+            - 'supp cat'
+            - 'supp cat.'
+            - 'supp cats'
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  HUM: 'Human Interest'
+                default_value: 'Human Interest'
+        'keywords': &editorial_keywords
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+            -
+              validator: TokenList
+              options:
+                separators: ';,|'
+                min: 0
+        'special instructions': &editorial_special_instructions
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                max: 2000
+                trim: true
+        'created date': &editorial_created_date
+          aliases:
+            - date_created
+            - 'create date'
+            - 'date created'
+          error: 'incorrect date format: must be mm/dd/yyyy'
+          validators:
+            -
+              validator: DateRange
+              options:
+                from: '1900-01-01'
+        'city': &editorial_city
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 32
+                trim: true
+        'country': &editorial_country_of_shoot
+          required_header: false
+        'title': &editorial_title
+          aliases:
+            - headline
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 3,
+                max: 255,
+                trim: true
+        'copyright': &editorial_copyright
+          required_header: false
+          aliases:
+            - 'copyright notice'
+            - 'copyright string'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 128
+        'editorial source': &editorial_source
+          aliases:
+            - source
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 3
+                max: 255
+        'description': &editorial_description
+          required_header: false
+          aliases:
+            - caption
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+                trim: true
+        'external url': &editorial_external_url
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+        'dsa alternate ids': &editorial_dsa_alternate_ids
+          aliases:
+            - 'alias table'
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        'call for image': &editorial_call_for_image
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 4
+        'color': &editorial_color
+          required_header: false
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  'Color': ['color', 'colour']
+                  'Black and White': ['black and white', 'b&w', 'b & w', 'black & white']
+        'content warnings': &editorial_content_warnings
+          required_header: false
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['Nudity', 'Violence']
+        'brief code': &editorial_brief_code
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 32
+        'personalities': &editorial_personalities
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        'province/state': &editorial_province_state
+          required_header: false
+          aliases:
+            - 'province state'
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 32
+                trim: true
+        'notes': &editorial_notes
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+                trim: true
+corbis:
+  sheets:
+    assets:
+      information:
+        display_name: 'Corbis Asset Template'
+        content_type: 'editorial'
+        display: true
+      'fields':
+        'filename': *editorial_file_name
+        'alternateids': *editorial_dsa_alternate_ids
+        'title': *editorial_title
+        'description': *editorial_description
+        'suppcat': *editorial_subjects
+        'category': *editorial_category
+        'keywords': *editorial_keywords
+        'create date': *editorial_created_date
+        'byline': *editorial_provider_name
+        'byline title': *editorial_provider_title
+        'country': *editorial_country_of_shoot
+        'iptccredit': *editorial_credit_line
+        'source': *editorial_source
+        'notes': *editorial_notes
+        'qualityranking': *editorial_rank

@@ -1,0 +1,335 @@
+nyc_market_log:
+  information:
+    display_name: 'NYC Market Ready Log'
+    content_type: 'creative'
+    display: true
+  ignore_sheet_names:
+    -
+      'help'
+    -
+      'values'
+    -
+      'change history'
+  sheets:
+    general_information:
+      parse_by: column,
+      header_position: 2,
+      fields:
+        ' Date of Submission (MM/DD/YYYY):':
+          validators:
+            -
+              validator: DateRange
+              options:
+                from: '1900-01-01'
+        ' Production Company:':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 64
+        ' Getty Contract Number (7-digit number):':
+          validators:
+            -
+              validator: NumberRange
+              options:
+                min: 1000000
+                max: 9999999
+        ' Contact E-mail Address:':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        ' Shoot Description/Title:':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        ' Intended Licensing Model:':
+          validators:
+            -
+              validator: ValueList
+              values: ['Royalty Free', 'Rights Released']
+        ' Number of Hard Drives:':
+          validators:
+            -
+              validator: NumberRange
+              options:
+                min: 1
+                max: 100
+    assets:
+      ignore_rows: [2, 3, 4, 5]
+      autofill_position: 6
+      fields:
+        'Contract Number':
+          autofill: true
+        'Original Filename':
+          key_field: true
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 30
+        'Clip ID':
+          required_header: false
+          Validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 100
+        'Headline':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 3
+                max: 255
+        'Caption':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+                trim: true
+        'Create Date':
+          autofill: true
+          validators:
+            -
+              validator: DateRange
+              options:
+                from: '1900-01-01'
+        'City':
+          autofill: true
+          validators:
+            -
+              validator: CharacterLength
+              min: 0
+              max: 64
+              options:
+                trim: true
+        'State-Province':
+          autofill: true
+          Validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+                trim: true
+        'Country':
+          autofill: true
+          validators:
+            -
+              validator: ValueList
+              values: ['United Kingdom', 'United States', 'France']
+        'Visual Color':
+          autofill: true
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  'Color': ['color', 'colour']
+                  'Black and White': ['black and white', 'b&w', 'b & w', 'black & white']
+        'Shot Speed':
+          autofill: true
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['Real Time', 'Slow Motion']
+                default_value: 'Real Time'
+                autocorrect: true
+        'Keywords':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+            -
+              validator: TokenList
+              options:
+                min: 3
+                max: 500
+        'Restriction':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 1000
+        'Clip Length':
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Release Information':
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+            -
+              validator: DataWrangler::Validators::Field::Base
+              options:
+                deferred: true
+        'Release Filename':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 1000
+            -
+              validator: DataWrangler::Validators::Field::Base
+              options:
+                deferred: true
+        'Originally Shot On Media Format':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Originally Shot On Frame Rate':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Originally Shot On Frame Size':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Originally Shot On Interlaced/Progressive':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Original Production Title':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 100
+        'Submitted Media Format':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Submitted Frame Rate':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Submitted Frame Size':
+          autofill: true
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Audio':
+          autofill: true
+          required_header: false
+          conformers:
+            -
+              conformer: Boolean
+              options:
+                valid: ['Y', 'N']
+        'People':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Venue':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 1000
+        'IPTC Category':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'IPTC Subject':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+              options:
+                default_value: 'Human Interest'
+        'Clip Type':
+          autofill: true
+          required_header: false
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+    releases:
+      ignore_rows: [2, 3, 4]
+      fields:
+        'Release Filename':
+          key_field: true
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        'Release Type':
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+        'Model Gender':
+          required_header: false
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+              options:
+                default: Unspecified
+        'Model Date of Birth':
+          required_header: false
+          validators:
+            -
+              validator: DateRange
+              options:
+                min: '1900-01-01'
+                deferred: true
+        'Model Ethnicity':
+          multiple_values: true
+          required_header: false
+          aliases:
+            - 'Ethnicity 1'
+          validators:
+            -
+              validator: DataWrangler::Validators::Field::Base
+              options:
+                deferred: true
+        'Ethnicity 2':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 3':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 4':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 5':
+          required_header: false
+          append_to: 'Model Ethnicity'

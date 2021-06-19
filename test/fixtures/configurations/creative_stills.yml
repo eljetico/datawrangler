@@ -1,0 +1,173 @@
+ipw_standard:
+  information:
+    display_name: 'IPW standard'
+    content_type: 'creative'
+    display: true
+  ignore_sheet_names:
+    -
+      'controlled values'
+  sheets:
+    assets:
+      ignore_rows: [2, 3, 4, 5, 6]
+      fields:
+        'Original Filename':
+          header: 'DataWrangler::Header'
+          key_field: true
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 64
+        'Credit Line':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 100
+        'Release Information':
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  'Model Released': ['MR']
+                  'Property Released': ['PR']
+                  'Not Released': ['NR']
+                  'Model and Property Released': ['MR&PR']
+        'Title':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 5
+                max: 255
+        'Description':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        'Country':
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['United Kingdom', 'United States', 'France']
+                default_value: Unspecified
+        'Province/State':
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        'City':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 255
+        'Notes':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+        'Date Created':
+          validators:
+            -
+              validator: DateRange
+              options:
+                from: '1900-01-01'
+        Keywords:
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 2000
+            -
+              validator: TokenList
+              options:
+                min: 3
+                max: 500
+        'Media Type':
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['Photography', 'Illustration']
+        'Visual Color':
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  'Color': ['color', 'colour']
+                  'Black and White': ['black and white', 'b&w', 'b & w', 'black & white']
+        'Release Name':
+          required_header: false
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 0
+                max: 1000
+    releases:
+      ignore_rows: [2, 3, 4, 5]
+      fields:
+        Model Release Filename:
+          key_field: true
+          validators:
+            -
+              validator: CharacterLength
+              options:
+                min: 1
+                max: 255
+        Gender:
+          processors:
+            -
+              conformer: MappedValue
+              options:
+                map:
+                  Male: ['male']
+                  Female: ['female']
+                  Transgender: ['transgender']
+                  'Non-Binary Gender': ['non-binary gender', 'non binary gender']
+        'Date of Birth':
+          validators:
+            -
+              validator: DateRange
+              options:
+                from: '1900-01-01'
+        'Model Ethnicity':
+          multiple_values: true
+          aliases:
+            - 'Ethnicity 1'
+          required_header: false
+          validators:
+            -
+              validator: ValueList
+              options:
+                values: ['Asian', 'White, Caucasian']
+                deferred: true
+        'Ethnicity 2':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 3':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 4':
+          required_header: false
+          append_to: 'Model Ethnicity'
+        'Ethnicity 5':
+          required_header: false
+          append_to: 'Model Ethnicity'

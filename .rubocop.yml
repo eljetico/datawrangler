@@ -1,0 +1,15 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+    - 'test/fixtures/**/*'
+    - 'tmp/**/*'
+    - '.git/**/*'
+    - 'bin/*'
+    - Guardfile
+    - datawrangler.gemspec
+  TargetRubyVersion: 2.5
+  SuggestExtensions: false
+
+Metrics/MethodLength:
+  Max: 20

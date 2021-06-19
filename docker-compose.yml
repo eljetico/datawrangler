@@ -1,0 +1,10 @@
+version: '2'
+services:
+  app:
+    container_name: datawrangler
+    build: .
+    volumes:
+      - .:/apps/datawrangler
+    # command: ["bundle", "exec", "guard"]
+    stdin_open: true
+    tty: true
