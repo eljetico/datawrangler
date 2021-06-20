@@ -12,8 +12,13 @@ nyc_market_log:
       'change history'
   sheets:
     general_information:
-      parse_by: column,
-      header_position: 2,
+      parse_by: column
+      header_position: 2
+      ignore_columns:
+        numbers: [99]
+        containing:
+          - "Ignore 1"
+          - "Ignore 2"
       fields:
         ' Date of Submission (MM/DD/YYYY):':
           validators:
@@ -22,6 +27,7 @@ nyc_market_log:
               options:
                 from: '1900-01-01'
         ' Production Company:':
+          required_header: true
           validators:
             -
               validator: CharacterLength
@@ -62,7 +68,8 @@ nyc_market_log:
                 min: 1
                 max: 100
     assets:
-      ignore_rows: [2, 3, 4, 5]
+      ignore_rows:
+        numbers: [2, 3, 4, 5]
       autofill_position: 6
       fields:
         'Contract Number':
@@ -282,7 +289,8 @@ nyc_market_log:
             -
               validator: DataWrangler::Validators::Field::Base
     releases:
-      ignore_rows: [2, 3, 4]
+      ignore_rows:
+        numbers: [2, 3, 4]
       fields:
         'Release Filename':
           key_field: true

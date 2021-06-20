@@ -14,7 +14,7 @@ module DataWrangler
         :autofill_record,
         :key_headers
 
-      def initialize(data_col, sheet)
+      def initialize(data_col, sheet = nil)
         @data = data_col[0]
         @errors = nil
         @position = data_col[1]

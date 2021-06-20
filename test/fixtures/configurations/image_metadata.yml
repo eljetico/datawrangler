@@ -3,7 +3,8 @@ image_metadata:
     images:
       information:
         description: 'Example configuration to handle a single sheet of image metadata'
-      ignore_rows: [2]
+      ignore_rows:
+        numbers: [2]
       key_fields:
         -
           'file name'

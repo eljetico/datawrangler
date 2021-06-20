@@ -58,8 +58,23 @@ module DataWrangler
 
         assert subject.required_field_aliases.include?("Original Filename")
         assert subject.ignore_row?(2)
-        assert subject.ignore_row?(99, ["Ignore row 1", "It should be avoided"])
+        assert subject.ignore_row?(99, ["Ignore 1"])
         refute subject.required_field_aliases.include?("Release Name")
+      end
+
+      def test_creative_video_config
+        config = load_configuration(
+          filename: "creative_video.yml",
+          key: "nyc_market_log"
+        )["sheets"]["general_information"]
+
+        subject = new_sheet("general_information", config)
+        refute subject.nil?
+
+        assert subject.required_field_aliases.include?(" Production Company:")
+        assert subject.ignore_column?(99)
+        # assert subject.ignore_row?(99, ["Ignore 1"])
+        # refute subject.required_field_aliases.include?("Release Name")
       end
 
       private

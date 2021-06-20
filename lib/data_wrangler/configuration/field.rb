@@ -74,7 +74,7 @@ module DataWrangler
 
       def _instantiate_header
         klass_name = @config.fetch("header", "DataWrangler::Header")
-        Object.const_get(klass_name).new(@field_name, @config.slice('aliases'))
+        Object.const_get(klass_name).new(@field_name, @config.slice("aliases"))
       rescue NameError => e
         raise DataWrangler::Configuration::Error, "#{klass_name} cannot be instantiated: #{e.message}"
       end
