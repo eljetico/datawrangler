@@ -62,9 +62,9 @@ module DataWrangler
       end
 
       def rows
-        @rows ||= begin
-          @data_sheet[:rows].map { |data_row| instantiate_record(Row, data_row) }
-        end
+        @rows ||= @data_sheet[:rows].map { |data_row|
+          instantiate_record(Row, data_row)
+        }
       end
 
       # Post-process rows into columns if required
@@ -93,12 +93,16 @@ module DataWrangler
         record.position == @autofill_record.position
       end
 
+      def is_header?(data)
+        @configuration.header_position == data.position
+      end
+
       def ignore_record?(data)
+        return true if is_header?(data)
+
         return true if autofill_record?(data)
 
-        method = "ignore_#{data.format}?"
-        result = @configuration.send(method, data.position)
-        result || (@configuration.header_position == data.position)
+        @configuration.send("ignore_#{data.format}?", data.position)
       end
 
       def instantiate_record(type, data)

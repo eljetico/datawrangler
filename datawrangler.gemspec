@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.license = "MIT"
   s.name = "datawrangler"
   s.version = DataWrangler.version
-  s.date = "2016-11-22"
   s.summary = "Data handler"
   s.description = "Comprehensive extract, transform, validate and load workflow for tabulated data files"
   s.requirements << ""

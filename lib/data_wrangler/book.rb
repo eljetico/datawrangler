@@ -17,9 +17,9 @@ module DataWrangler
       end
 
       def sheets
-        @sheets ||= begin
-          @reader.data.map { |data_sheet| DataWrangler::Book::Sheet.new(data_sheet) }
-        end
+        @sheets ||= @reader.data.map { |data_sheet|
+          DataWrangler::Book::Sheet.new(data_sheet)
+        }
       end
 
       # Curry this function to return records, sheets etc

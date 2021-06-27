@@ -46,8 +46,7 @@ module DataWrangler
       def process
         return @validation_result.success? if validated?
 
-        processors = @configuration.processors || []
-        _process(processors)
+        _process(@configuration.processors || [])
       end
 
       # Seed the processor chain with the original value, but we mutate

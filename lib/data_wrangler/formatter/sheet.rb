@@ -71,9 +71,9 @@ module DataWrangler
       def autofill_record
         return nil if @configuration.autofill_position.nil?
 
-        @autofill_record ||= begin
-          data.find { |d| d.position == @configuration.autofill_position }
-        end
+        @autofill_record ||= data.find { |d|
+          d.position == @configuration.autofill_position
+        }
       end
     end
   end
