@@ -29,7 +29,7 @@ module DataWrangler
       end
 
       def autofill?
-        @autofill ||= @config.fetch("autofill", false)
+        @autofill ||= @config.fetch("autofill", true)
       end
 
       def default_value
@@ -65,7 +65,6 @@ module DataWrangler
       def _default_config
         {
           "multiple_values" => false,
-          "autofill" => false,
           "required_header" => true,
           "aliases" => [],
           "processors" => []

@@ -32,6 +32,8 @@ module DataWrangler
       end
 
       def configure_records(sheet)
+        # This needs to happen before Cells are configured
+        sheet.autofill_record = autofill_record
         sheet.records.each do |record|
           f_record = DataWrangler::Formatter::Record.new(record)
           f_record.configure
@@ -40,7 +42,6 @@ module DataWrangler
 
       def configure_data_sheet
         @data_sheet.headers = @headers
-        @data_sheet.autofill_record = autofill_record
         @data_sheet.configuration = @configuration
         configure_records(@data_sheet)
       end
@@ -71,7 +72,7 @@ module DataWrangler
       def autofill_record
         return nil if @configuration.autofill_position.nil?
 
-        @autofill_record ||= data.find { |d|
+        data.find { |d|
           d.position == @configuration.autofill_position
         }
       end

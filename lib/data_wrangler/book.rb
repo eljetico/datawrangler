@@ -18,7 +18,9 @@ module DataWrangler
 
       def sheets
         @sheets ||= @reader.data.map { |data_sheet|
-          DataWrangler::Book::Sheet.new(data_sheet)
+          sheet = DataWrangler::Book::Sheet.new(data_sheet)
+          sheet.book = self
+          sheet
         }
       end
 

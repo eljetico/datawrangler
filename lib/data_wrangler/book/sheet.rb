@@ -12,7 +12,7 @@ module DataWrangler
     # may require vertical data: call 'to_columns' to reformat the data into
     # a collection of Column rather than Row objects
     class Sheet
-      attr_accessor :autofill_record, :configuration, :headers
+      attr_accessor :autofill_record, :book, :configuration, :headers
       attr_reader :columns, :errors
 
       extend Forwardable
@@ -87,6 +87,8 @@ module DataWrangler
 
       private
 
+      # Autofill record is asserted during configuration phase
+      # by Formatter::Sheet
       def autofill_record?(record)
         return false if @autofill_record.nil?
 

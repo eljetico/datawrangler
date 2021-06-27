@@ -4,9 +4,10 @@ module DataWrangler
   module Book
     # Wrap a value, could be anything, including another Cell
     class Cell
-      attr_accessor :configuration, :ignore, :value
+      attr_accessor :configuration, :ignore, :row, :value
 
-      def initialize(data_value)
+      def initialize(data_value, row_object = nil)
+        @row = row_object
         @value = data_value.respond_to?(:value) ? data_value.value : data_value
         @header = nil # updated during configure phase
         @ignore = false # ditto

@@ -18,8 +18,12 @@ module DataWrangler
         @data = data_col[0]
         @errors = nil
         @position = data_col[1]
-        @cells = @data.map { |data_cell| Cell.new(data_cell) }
+        @cells = @data.map { |data_cell| Cell.new(data_cell, self) }
         @sheet = sheet
+      end
+
+      def autofill_record?
+        position == @sheet.configuration.autofill_position
       end
 
       def clean_cells
@@ -41,8 +45,6 @@ module DataWrangler
       end
 
       def _configure_cells
-        autofill_record = @sheet.autofill_record
-
         @sheet.headers.each_with_index do |header, index|
           cell = cells[index]
           next if cell.nil?
@@ -56,19 +58,9 @@ module DataWrangler
 
           cell.configuration = cell_config # Need to set the configuration
           cell.header.actual = header
-          cell.value = extract_value(cell, index, cell_config, autofill_record)
+          cell.value = extract_value(cell, index, cell_config)
         end
       end
-
-      # def _configure_primary_key(sheet)
-      #   @key_headers = sheet.key_headers
-      #   @primary_key = @key_headers.empty? ? nil : _extract_primary_key(@key_headers)
-      # end
-
-      # This isn't entirely necessary
-      # def _configure_validations(sheet)
-      #   @validations = sheet.record_validations
-      # end
 
       def _extract_primary_key(headers)
         clean_cells.select { |cell| headers.include?(cell.sanitized_header) }.map do |cell|
@@ -76,12 +68,12 @@ module DataWrangler
         end.join(":")
       end
 
-      def extract_value(cell, index, config, autofill_record)
+      def extract_value(cell, index, field_config)
         return cell.value unless cell.empty?
 
-        return nil unless config.autofill?
+        return nil unless field_config.autofill? # defaults to true
 
-        autofill_record.nil? ? nil : autofill_record.cells[index].value
+        @sheet.autofill_record.nil? ? nil : @sheet.autofill_record.cells[index].value
       end
 
       def validations
