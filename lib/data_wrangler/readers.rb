@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "readers/decoded_text"
+require_relative "readers/dummy_reader"
 require_relative "readers/general_reader"
 require_relative "readers/xls_reader"
 require_relative "readers/xlsx_reader"
@@ -10,17 +11,19 @@ require_relative "readers/csv_reader"
 module DataWrangler
   # Main readers module
   module Readers
-    def self.for(filepath)
-      extension = File.extname(filepath).downcase
+    def self.for(filepath, options = nil)
+      options ||= {}
+      options.fetch(:reader, _for(filepath))
+    end
 
-      readers = {
+    def self._for(filepath)
+      reader = {
         ".xls" => "XlsReader",
         ".xlsx" => "XlsxReader",
         ".txt" => "TxtReader",
         ".csv" => "CsvReader"
-      }.freeze
+      }.freeze[File.extname(filepath).downcase]
 
-      reader = readers[extension]
       Object.const_get("DataWrangler::Readers::#{reader}").new
     end
   end

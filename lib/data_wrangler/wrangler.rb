@@ -5,10 +5,10 @@ module DataWrangler
   class Wrangler
     attr_reader :book, :configuration, :formatter
 
-    def initialize(filepath, configpath:, key: nil)
+    def initialize(filepath, configpath:, key: nil, options: nil)
       @filepath = filepath
       @configuration = _instantiate_configuration(configpath, key)
-      @book = DataWrangler::Book::Base.new(@filepath)
+      @book = DataWrangler::Book::Base.new(@filepath, options)
       DataWrangler::Formatter::Base.new(@book, @configuration).configure
     end
 

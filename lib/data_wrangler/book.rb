@@ -10,9 +10,10 @@ module DataWrangler
     class Base
       attr_reader :errors
 
-      def initialize(filepath)
+      def initialize(filepath, options = nil)
+        @options = {}.merge(options || {})
         @filepath = filepath
-        @reader = DataWrangler::Readers.for(@filepath)
+        @reader = DataWrangler::Readers.for(@filepath, @options)
         @reader.parse(@filepath)
       end
 

@@ -58,7 +58,7 @@ module DataWrangler
 
       # Returns [[cols|rows], line_no]
       def convert_row(row, line_no)
-        [row.map { |value| clean_value(value) }, line_no]
+        [row.map! { |value| clean_value(value) }, line_no]
       end
     end
   end

@@ -140,8 +140,6 @@ module DataWrangler
         @parse_by = options.fetch("parse_by", "row").downcase
         @header_position = options.fetch("header_position", 1)
         @autofill_position = options.fetch("autofill_position", nil)
-        # _load_ignore_row_options(options)
-        # _load_ignore_column_options(options)
         _load_ignore_record_config(options)
       end
 

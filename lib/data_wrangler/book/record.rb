@@ -58,7 +58,7 @@ module DataWrangler
 
           cell.configuration = cell_config # Need to set the configuration
           cell.header.actual = header
-          cell.value = extract_value(cell, index, cell_config)
+          assert_cell_value(cell, index, cell_config)
         end
       end
 
@@ -68,12 +68,14 @@ module DataWrangler
         end.join(":")
       end
 
-      def extract_value(cell, index, field_config)
-        return cell.value unless cell.empty?
+      def assert_cell_value(cell, index, field_config)
+        return unless cell.empty?
 
-        return nil unless field_config.autofill? # defaults to true
+        return unless field_config.autofill? # defaults to true
 
-        @sheet.autofill_record.nil? ? nil : @sheet.autofill_record.cells[index].value
+        return if @sheet.autofill_record.nil?
+
+        cell.value = @sheet.autofill_record.cells[index].value
       end
 
       def validations
