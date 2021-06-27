@@ -38,6 +38,13 @@ def xlsx_path(filename)
   "#{fixtures_path}/xlsx/#{filename}"
 end
 
+def books_config(key = "books")
+  DataWrangler::Configuration::Book.new(
+    configuration_path("books.yml"),
+    key: key
+  )
+end
+
 def editorial_config(key = "editorial_stills_default")
   DataWrangler::Configuration::Book.new(
     configuration_path("editorial_stills.yml"),
