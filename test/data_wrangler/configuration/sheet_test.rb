@@ -57,8 +57,6 @@ module DataWrangler
         refute subject.nil?
 
         assert subject.required_field_aliases.include?("Original Filename")
-        assert subject.ignore_row?(2)
-        assert subject.ignore_row?(99, ["Ignore 1"])
         refute subject.required_field_aliases.include?("Release Name")
       end
 
@@ -72,9 +70,6 @@ module DataWrangler
         refute subject.nil?
 
         assert subject.required_field_aliases.include?(" Production Company:")
-        assert subject.ignore_column?(99)
-        # assert subject.ignore_row?(99, ["Ignore 1"])
-        # refute subject.required_field_aliases.include?("Release Name")
       end
 
       private

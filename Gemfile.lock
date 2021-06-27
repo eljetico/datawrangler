@@ -23,6 +23,9 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ansi (1.5.0)
     ast (2.4.2)
+    benchmark-ips (2.9.1)
+    benchmark-memory (0.1.2)
+      memory_profiler (~> 0.9)
     builder (3.2.4)
     charlock_holmes_bundle_icu (0.6.9.2)
     coderay (1.1.3)
@@ -31,9 +34,9 @@ GEM
     creek (2.5.2)
       nokogiri (>= 1.10.0)
       rubyzip (>= 1.0.0)
-    ffi (1.15.0)
-    formatador (0.2.5)
-    guard (2.16.2)
+    ffi (1.15.3)
+    formatador (0.3.0)
+    guard (2.17.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (>= 1.0.12, < 2.0)
@@ -54,6 +57,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lumberjack (1.2.8)
+    memory_profiler (0.9.14)
     method_source (1.0.0)
     minitest (5.14.4)
     minitest-reporters (1.4.3)
@@ -62,13 +66,13 @@ GEM
       minitest (>= 5.0)
       ruby-progressbar
     nenv (0.3.0)
-    nokogiri (1.11.3-x86_64-linux)
+    nokogiri (1.11.7-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
     parallel (1.20.1)
-    parser (3.0.1.0)
+    parser (3.0.1.1)
       ast (~> 2.4.1)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -76,40 +80,40 @@ GEM
     public_suffix (4.0.6)
     racc (1.5.2)
     rainbow (3.0.0)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rb-readline (0.5.5)
     regexp_parser (2.1.1)
     rexml (3.2.5)
-    rubocop (1.11.0)
+    rubocop (1.17.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.2.0, < 2.0)
+      rubocop-ast (>= 1.7.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.4.1)
-      parser (>= 2.7.1.5)
-    rubocop-performance (1.10.1)
-      rubocop (>= 0.90.0, < 2.0)
+    rubocop-ast (1.7.0)
+      parser (>= 3.0.1.1)
+    rubocop-performance (1.11.2)
+      rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-ole (1.2.12.2)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.0)
     shellany (0.0.1)
-    spreadsheet (1.2.8)
+    spreadsheet (1.2.9)
       ruby-ole
-    standard (1.0.4)
-      rubocop (= 1.11.0)
-      rubocop-performance (= 1.10.1)
+    standard (1.1.2)
+      rubocop (= 1.17.0)
+      rubocop-performance (= 1.11.2)
     standardrb (1.0.0)
       standard
     thor (1.1.0)
     unicode-display_width (2.0.0)
-    webmock (3.12.2)
+    webmock (3.13.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -118,6 +122,8 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  benchmark-ips
+  benchmark-memory
   datawrangler!
   guard
   guard-minitest
@@ -130,4 +136,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.2.16
+   2.2.21

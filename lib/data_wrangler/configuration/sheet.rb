@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "ignorable"
 require_relative "validatable"
 require_relative "field"
 
@@ -8,6 +9,7 @@ module DataWrangler
     # Handle sheet-based configuration
     # rubocop:disable Metrics/ClassLength
     class Sheet
+      include Ignorable
       include Validatable
 
       MIN_MATCHING_HEADER_COUNT = 2
@@ -16,48 +18,12 @@ module DataWrangler
         :autofill_position,
         :field_map,
         :header_position,
-        :ignore_rows,
-        :ignore_columns,
         :parse_by
 
       attr_accessor :key_headers, :record_validations, :sheet_validations
 
       def config_for_header(header)
         @field_map.fetch(header.to_s.downcase, nil)
-      end
-
-      def ignored_column_position?(position)
-        @ignore_column_numbers.include?(position)
-      end
-
-      def ignored_column_contents?(record)
-        (@ignore_columns_containing & record).any?
-      end
-
-      # Humanized column number
-      def ignore_column?(position, record = [])
-        return true if ignored_column_position?(position)
-
-        return true if ignored_column_contents?(record)
-
-        false
-      end
-
-      def ignored_row_position?(position)
-        @ignore_row_numbers.include?(position)
-      end
-
-      def ignored_row_contents?(record)
-        (@ignore_rows_containing & record).any?
-      end
-
-      # Humanized row number
-      def ignore_row?(position, record = [])
-        return true if ignored_row_position?(position)
-
-        return true if ignored_row_contents?(record)
-
-        false
       end
 
       def initialize(namespace, config = nil)
@@ -164,18 +130,6 @@ module DataWrangler
         Array(configured).flatten
       end
 
-      def _load_ignore_column_options(options)
-        config = options.fetch("ignore_columns", {})
-        @ignore_column_numbers = config.fetch("numbers", [])
-        @ignore_columns_containing = config.fetch("containing", [])
-      end
-
-      def _load_ignore_row_options(options)
-        config = options.fetch("ignore_rows", {})
-        @ignore_row_numbers = config.fetch("numbers", [])
-        @ignore_rows_containing = config.fetch("containing", [])
-      end
-
       def _load_record_config(options)
         options.fetch("record_validations", []).map do |v_config|
           load_record_validator(@namespace, v_config)
@@ -186,8 +140,9 @@ module DataWrangler
         @parse_by = options.fetch("parse_by", "row").downcase
         @header_position = options.fetch("header_position", 1)
         @autofill_position = options.fetch("autofill_position", nil)
-        _load_ignore_row_options(options)
-        _load_ignore_column_options(options)
+        # _load_ignore_row_options(options)
+        # _load_ignore_column_options(options)
+        _load_ignore_record_config(options)
       end
 
       def _load_self_validations(options)

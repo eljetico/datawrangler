@@ -12,7 +12,7 @@ ipw_standard:
         numbers: [2, 3, 4, 5, 6]
         containing:
           - "Ignore 1"
-          - "Ignore 2" 
+          - "Ignore 2"
       fields:
         'Original Filename':
           header: 'DataWrangler::Header'
@@ -126,7 +126,8 @@ ipw_standard:
                 min: 0
                 max: 1000
     releases:
-      ignore_rows: [2, 3, 4, 5]
+      ignore_rows: 
+        numbers: [2, 3, 4, 5]
       fields:
         Model Release Filename:
           key_field: true
