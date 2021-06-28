@@ -15,10 +15,9 @@ module DataWrangler
         :key_headers
 
       def initialize(data_col, sheet = nil)
-        @data = data_col
         @errors = nil
         @position = data_col.shift
-        @cells = @data.map { |data_cell| Cell.new(data_cell, self) }
+        @cells = data_col.map { |data_cell| Cell.new(data_cell, self) }
         @sheet = sheet
       end
 
@@ -35,10 +34,10 @@ module DataWrangler
       end
 
       # Allow injection of headers for testing
-      def primary_key(headers = nil)
+      def primary_key(headers = key_headers)
         @primary_key ||= begin
-          headers ||= key_headers
-          return nil if headers.compact.empty?
+          # return nil if headers.compact.empty?
+          return nil unless headers.any? # [nil, nil] returns 'empty'
 
           _extract_primary_key(headers)
         end

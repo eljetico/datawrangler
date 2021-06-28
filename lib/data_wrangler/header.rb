@@ -6,8 +6,9 @@ module DataWrangler
   #
   class Header
     attr_writer :actual
+    OPTS = {}.freeze
 
-    def initialize(field_name, config = {})
+    def initialize(field_name, config = OPTS)
       @config = config
       @field_name = field_name
       @actual = nil
