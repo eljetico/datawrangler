@@ -3,7 +3,7 @@
 module DataWrangler
   # Main class
   class Wrangler
-    attr_reader :book, :configuration, :formatter
+    attr_reader :book, :configuration
 
     def initialize(filepath, configpath:, key: nil, options: nil)
       @filepath = filepath

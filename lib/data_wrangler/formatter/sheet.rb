@@ -33,7 +33,7 @@ module DataWrangler
 
       def configure_records(sheet)
         # This needs to happen before Cells are configured
-        sheet.autofill_record = autofill_record
+        sheet.autofill_record = assert_autofill_record
         sheet.records.each do |record|
           record._configure_cells
         end
@@ -68,7 +68,7 @@ module DataWrangler
         config.extract_headers_from_data(@data_sheet).freeze
       end
 
-      def autofill_record
+      def assert_autofill_record
         return nil if @configuration.autofill_position.nil?
 
         data.find { |d|
