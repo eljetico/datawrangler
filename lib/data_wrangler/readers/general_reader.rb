@@ -22,6 +22,7 @@ module DataWrangler
         value
       end
 
+      # TODO: creates a new array for every record, only to be discarded!
       def empty_row?(data)
         data.compact.empty?
       end
@@ -58,7 +59,10 @@ module DataWrangler
 
       # Returns [[cols|rows], line_no]
       def convert_row(row, line_no)
-        [row.map! { |value| clean_value(value) }, line_no]
+        # [row.map! { |value| clean_value(value) }, line_no]
+        row.map! { |value| clean_value(value) }
+        row.unshift(line_no)
+        row
       end
     end
   end

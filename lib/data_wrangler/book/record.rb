@@ -15,9 +15,9 @@ module DataWrangler
         :key_headers
 
       def initialize(data_col, sheet = nil)
-        @data = data_col[0]
+        @data = data_col
         @errors = nil
-        @position = data_col[1]
+        @position = data_col.shift
         @cells = @data.map { |data_cell| Cell.new(data_cell, self) }
         @sheet = sheet
       end
@@ -27,7 +27,7 @@ module DataWrangler
       end
 
       def clean_cells
-        @cells.reject(&:ignore?)
+        @clean_cells ||= @cells.reject(&:ignore?)
       end
 
       def empty?
@@ -49,7 +49,7 @@ module DataWrangler
           cell = cells[index]
           next if cell.nil?
 
-          cell_config = @sheet.config_for_header(header)
+          cell_config = @sheet.header_configs[index]
 
           if cell_config.nil?
             cell.ignore = true
@@ -58,7 +58,7 @@ module DataWrangler
 
           cell.configuration = cell_config # Need to set the configuration
           cell.header.actual = header
-          assert_cell_value(cell, index, cell_config)
+          assert_cell_value(cell, index)
         end
       end
 
@@ -68,10 +68,10 @@ module DataWrangler
         end.join(":")
       end
 
-      def assert_cell_value(cell, index, field_config)
+      def assert_cell_value(cell, index)
         return unless cell.empty?
 
-        return unless field_config.autofill? # defaults to true
+        return unless cell.configuration.autofill? # defaults to true
 
         return if @sheet.autofill_record.nil?
 

@@ -10,17 +10,14 @@ module DataWrangler
       require "csv"
 
       def read_rows
-        line_no = 0
-
-        csv_read.each do |row|
-          line_no += 1
+        csv_read.each_with_index do |row, i|
           next if row.empty?
 
-          data = convert_row(row, line_no)
+          data = convert_row(row, i + 1)
           yield data if block_given?
         end
       rescue => e
-        raise "Data read error on line #{r_index}: #{e.message}"
+        raise "Data read error: #{e.message}"
       end
 
       def csv_read

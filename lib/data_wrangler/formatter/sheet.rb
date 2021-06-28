@@ -35,14 +35,13 @@ module DataWrangler
         # This needs to happen before Cells are configured
         sheet.autofill_record = autofill_record
         sheet.records.each do |record|
-          f_record = DataWrangler::Formatter::Record.new(record)
-          f_record.configure
+          record._configure_cells
         end
       end
 
       def configure_data_sheet
-        @data_sheet.headers = @headers
         @data_sheet.configuration = @configuration
+        @data_sheet.set_headers(@headers)
         configure_records(@data_sheet)
       end
 
@@ -66,7 +65,7 @@ module DataWrangler
       end
 
       def extract_headers(config)
-        config.extract_headers_from_data(@data_sheet)
+        config.extract_headers_from_data(@data_sheet).freeze
       end
 
       def autofill_record

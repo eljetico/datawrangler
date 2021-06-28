@@ -18,7 +18,7 @@ module DataWrangler
 
         def test_subclass_succeeds
           record = DataWrangler::Book::Record.new(
-            [["OK", nil], 0]
+            [0, "OK", nil]
           )
 
           validator = DataWrangler::Validators::Record::Cases::LinkedFields.new
@@ -27,7 +27,7 @@ module DataWrangler
 
         def test_subclass_fails
           record = DataWrangler::Book::Record.new(
-            [["OK", "Not OK"], 0]
+            [0, "OK", "Not OK"]
           )
 
           validator = DataWrangler::Validators::Record::Cases::LinkedFields.new

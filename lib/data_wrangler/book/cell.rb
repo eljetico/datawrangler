@@ -9,7 +9,6 @@ module DataWrangler
       def initialize(data_value, row_object = nil)
         @row = row_object
         @value = data_value.respond_to?(:value) ? data_value.value : data_value
-        @header = nil # updated during configure phase
         @ignore = false # ditto
         @configuration = nil # ditto
         @validation_result = nil

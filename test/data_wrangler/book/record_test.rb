@@ -15,6 +15,14 @@ module DataWrangler
         nil
       end
 
+      def header_configs
+        @configs ||= headers.map { |h| config_for_header(h) }
+      end
+
+      def downcased_headers
+        headers.map(&:downcase)
+      end
+
       def headers
         ["File Name", "File Type", "MIME"]
       end
@@ -54,7 +62,8 @@ module DataWrangler
       end
 
       def _new_record(sheet:, position: 1, data: [])
-        DataWrangler::Book::Record.new([data, position], sheet)
+        data.unshift(position)
+        DataWrangler::Book::Record.new(data, sheet)
       end
     end
   end

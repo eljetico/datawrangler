@@ -16,7 +16,7 @@ module DataWrangler
 
         assert_equal 1, data.length # pages
         assert_equal 4, data[0][:rows].length # rows
-        assert_equal 33, data[0][:rows][0][0].length # columns
+        assert_equal 34, data[0][:rows][0].length # line_no + columns
       end
     end
   end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "formatter/sheet"
-require_relative "formatter/record"
 
 module DataWrangler
   # Reformat Book/Sheet/Record/Cell data according to supplied configuration

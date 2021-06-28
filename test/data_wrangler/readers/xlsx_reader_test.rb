@@ -18,7 +18,7 @@ module DataWrangler
         assert_equal 1, data.length # pages
         assert_equal "Sheet 1", sheet[:name]
         assert_equal 3, sheet[:rows].length # rows
-        assert_equal 16, sheet[:rows][0][0].length # columns
+        assert_equal 17, sheet[:rows][0].length # line_no + columns
       end
 
       def test_multi_sheet
@@ -30,7 +30,7 @@ module DataWrangler
 
         assert_equal 3, data.length # pages
         assert_equal 8, sheet1[:rows].length # rows
-        assert_equal 8, sheet2[:rows][0][0].length # columns
+        assert_equal 9, sheet2[:rows][0].length # line_no + columns
       end
     end
   end
